@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-
+#include <getopt.h>
 using namespace std;
 
 #include "RedisPS.h"
@@ -79,6 +79,62 @@ bool run_sub(const std::string& e)
     return false;
 }
 
+void printUsage(const char* app)
+{
+    printf("Usage: %s [options] <p|s> <event>\n"
+           "\n"
+           "  Options:\n"
+           "  -h, --host=name      Redis host for connection, default host is localhost\n"
+           "  -P, --port=#         Port number to use for connection, default port is 6379\n"
+           "  -u, --user=name      User for auth\n"
+           "  -p, --passwd[=name]  Password to use when connecting to server. If password is\n"
+           "                       not given it's asked from the tty.",
+           app);
+}
+
+void parseArgs(int argc, char** argv)
+{
+    static struct option long_options[] = {
+        {"host",   required_argument,NULL, 'h'},
+        {"port",   optional_argument,NULL, 'P'},
+        {"user",   no_argument,      NULL, 'u'},
+        {"passwd", no_argument,      NULL, 'p'},
+        {NULL,     0,                NULL, 0},
+    };
+
+    char opt;
+    int option_index;
+    while((opt = getopt_long_only(argc, argv, "h:u:P:p::", long_options, &option_index))!= -1)
+    {
+        printf("opt = %c\t\t", opt);
+        printf("optarg = %s\t\t",optarg);
+        printf("optind = %d\t\t",optind);
+        printf("argv[optind] =%s\t\t", argv[optind]);
+        printf("option_index = %d\n",option_index);
+
+        switch (opt) {
+            case 'h':
+
+                break;
+
+            case 'u':
+
+                break;
+
+            case 'p':
+
+                break;
+
+            case 'P':
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+}
 
 int main(int argc, char** argv)
 {
