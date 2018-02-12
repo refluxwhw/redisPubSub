@@ -145,7 +145,7 @@ void RedisPS::disconnect_callback(const redisAsyncContext *redis_context, int st
     }
 }
 
-void RedisPS::command_callback(redisAsyncContext *redis_context, void *reply, void *privdata)
+void RedisPS::command_callback(redisAsyncContext __attribute__((unused)) *redis_context, void *reply, void *privdata)
 {
     printf("command callback.\n");
 
@@ -154,14 +154,14 @@ void RedisPS::command_callback(redisAsyncContext *redis_context, void *reply, vo
     }
 
     // 静态函数中，要使用类的成员变量，把当前的this指针传进来，用this指针间接访问
-    RedisPS *self_this = reinterpret_cast<RedisPS *>(privdata);
+    //RedisPS *self_this = reinterpret_cast<RedisPS *>(privdata);
     redisReply *redis_reply = reinterpret_cast<redisReply *>(reply);
 
     // 订阅接收到的消息是一个带三元素的数组
     if (redis_reply->type == REDIS_REPLY_ARRAY &&
             redis_reply->elements == 3)
     {
-        printf( ": Recieve message:%s:%d:%s:%d:%s:%d\n",
+        printf( ": Recieve message:%s:%zu:%s:%zu:%s:%zu\n",
                 redis_reply->element[0]->str, redis_reply->element[0]->len,
                 redis_reply->element[1]->str, redis_reply->element[1]->len,
                 redis_reply->element[2]->str, redis_reply->element[2]->len);
